@@ -1,0 +1,10 @@
+%h2 Projects
+%ul
+  - if @projects.empty?
+    %li No projects.
+  - @projects.each do |project|
+    %li
+      = link_to project.title,  project_path(project)
+      %span
+        = link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+= link_to 'New Project', new_project_path
