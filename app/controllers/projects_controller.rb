@@ -54,14 +54,25 @@ class ProjectsController < ApplicationController
   end
 
   def clear
-    @project.items.complete.destroy_all
+    if @project.items.complete.length < 1
+      respond_to do |format|
+        format.html {
+                      redirect_to project_path(@project),
+                      notice: 'There are no completed items for this project.'
+                    }
+                end
+                  else
+    if @project.items.complete.update(deleted?:true)
     respond_to do |format|
       format.html {
                     redirect_to project_path(@project),
+
                     notice: 'Completed items were successfully cleared.'
                   }
+      end
     end
   end
+end
 
 private
   def set_project

@@ -2,9 +2,10 @@
   - if @project.items.empty?
     %li No items.
   - @project.items.each do |item|
-    %li{ class: "#{item.done? ? 'done' : 'not-done'}" }
-      = link_to item.action, edit_project_item_path(@project, item)
-      - unless item.done?
-        = button_to 'Done', { controller: :items, action: :update, id: item.id, project_id: @project.id, item: { done: true } }, { method: :patch }
-= link_to 'New Item', new_project_path(project)
+    - if !item.deleted?
+      %li
+        = link_to item.action, edit_project_item_path(@project, item)
+        - unless item.done?
+          = button_to 'Done', { controller: :items, action: :update, id: item.id, project_id: @project.id, item: { done: true } }, { method: :patch }
+= link_to 'New Item', new_project_item_path(project)
 = link_to 'Clear Completed Items', clear_project_path(project), method: :delete, id: 'clearer'

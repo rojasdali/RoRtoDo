@@ -2,11 +2,11 @@ class ItemsController < ApplicationController
   before_action :get_project
 
   def new
-    @item = @project.items.build
+    @item = @project.items.new()
   end
 
   def create
-    @item = @project.items.build(item_params)
+    @item = @project.items.new(item_params)
 
     respond_to do |format|
       if @item.save
